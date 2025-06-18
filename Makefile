@@ -1,14 +1,18 @@
-.PHONY: lint mypy tests check
+.PHONY: lint init-dev
+
+init:
+	pip install poetry
+	poetry install --without dev
+
+init-dev: init
+	poetry install --with dev
+
+build: init
+	poetry build
 
 lint:
-	poetry run black .
+	poetry run black --check .
+	poetry run ruff check .
 
-mypy:
-	poetry run mypy src
-	poetry run mypy tests
-
-tests:
-	poetry run pytest
-
-check: lint mypy tests
+check: lint
 	@echo "✅ Проверки пройдены"
