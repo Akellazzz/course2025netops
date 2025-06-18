@@ -15,8 +15,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: dependencies
-        run: make init-dev
+      # - name: dependencies
+      #   run: make init-dev
       - name: lint
         run: make lint
       - name: mypy
