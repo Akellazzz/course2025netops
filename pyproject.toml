@@ -1,6 +1,6 @@
 [project]
 name = "course2025netops"
-version = "0.1.4"
+version = "0.1.5"
 description = ""
 authors = [
     {name = "Akella101",email = "eekosyanenko@yandex.ru"}
