@@ -64,3 +64,11 @@ lint.ignore = [
     "S311",   # Standard pseudo-random generators are not suitable for cryptographic purposes
     "ERA001", # Remove commented-out code
 ]
+
+[tool.mypy]
+#plugins = ["pydantic.mypy"]
+strict = false
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+warn_return_any = true
+warn_unreachable = true

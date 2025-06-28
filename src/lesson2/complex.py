@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Callable
 from urllib.parse import urlencode
 
 NETBOX_URL = "https://demo.netbox.dev"
@@ -102,7 +103,7 @@ def craft_nb_query(request_params: dict[str, list[str]]) -> list[tuple[str, str 
     if len(request_params) == 0:
         raise ValueError("отсутствуют параметры запроса")
 
-    param_handlers = {
+    param_handlers: dict[str, Callable] = {
         "name": lambda item: ("name__ie", item.lower()),
         "site": lambda item: ("site_id", _get_site_id(item)),
         "role": lambda item: ("role_id", _get_device_role_id(item)),
