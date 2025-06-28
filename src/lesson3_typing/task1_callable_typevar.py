@@ -7,12 +7,13 @@
 from typing import Callable, Sequence, TypeVar
 
 T = TypeVar("T")
+Result = TypeVar("Result")
 
 
 def process(
-    func: Callable[[T], int | str],
+    func: Callable[[T], Result],
     seq: Sequence[T],
-) -> Sequence[int | str]:
+) -> Sequence[Result]:
     return [func(item) for item in seq]
 
 
