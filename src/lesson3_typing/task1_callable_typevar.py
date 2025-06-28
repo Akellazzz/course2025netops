@@ -4,7 +4,15 @@
 # сделать аннотацию кода, что бы запуск mypy --strict проходил без ошибок.
 
 
-def process(func, seq):
+from typing import Callable, Sequence, TypeVar
+
+T = TypeVar("T")
+
+
+def process(
+    func: Callable[[T], int | str],
+    seq: Sequence[T],
+) -> Sequence[int | str]:
     return [func(item) for item in seq]
 
 

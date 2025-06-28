@@ -14,5 +14,8 @@ lint:
 	poetry run black --check .
 	poetry run ruff check .
 
-check: lint
+mypy:
+	mypy --strict .
+
+check: lint mypy
 	@echo "✅ Проверки пройдены"

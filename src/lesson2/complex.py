@@ -1,6 +1,8 @@
 from functools import lru_cache
-from typing import Callable
+from typing import Callable, TypeAlias
 from urllib.parse import urlencode
+
+QueryParam: TypeAlias = tuple[str, str | int]
 
 NETBOX_URL = "https://demo.netbox.dev"
 
@@ -68,7 +70,7 @@ def _get_manufacturer_id(manufacturer_slug: str) -> int:
     return manufacturer_id
 
 
-def craft_nb_query(request_params: dict[str, list[str]]) -> list[tuple[str, str | int]]:
+def craft_nb_query(request_params: dict[str, list[str]]) -> list[QueryParam]:
     """Преобразование набора параметров в request params.
 
     Args:
@@ -86,7 +88,7 @@ def craft_nb_query(request_params: dict[str, list[str]]) -> list[tuple[str, str 
         ValueError: если переданы неизвестные или пустые параметры
 
     Returns:
-        list[tuple[str, str | int]]: список кортежей из переданных параметров + brief и limit:
+        list[QueryParam]: список кортежей из переданных параметров + brief и limit:
         ```python
         [
             ("manufacturer_id", 3),
@@ -102,8 +104,7 @@ def craft_nb_query(request_params: dict[str, list[str]]) -> list[tuple[str, str 
     """
     if len(request_params) == 0:
         raise ValueError("отсутствуют параметры запроса")
-
-    param_handlers: dict[str, Callable] = {
+    param_handlers: dict[str, Callable[[str], QueryParam]] = {
         "name": lambda item: ("name__ie", item.lower()),
         "site": lambda item: ("site_id", _get_site_id(item)),
         "role": lambda item: ("role_id", _get_device_role_id(item)),
